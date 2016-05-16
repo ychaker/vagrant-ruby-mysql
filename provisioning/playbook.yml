@@ -1,0 +1,27 @@
+---
+# Basics
+- hosts: all
+  sudo: true
+  roles:
+    - base
+    - ruby
+    - vim
+
+# DB
+- hosts: all
+  sudo: true
+  roles:
+    - mysql
+
+# Servers
+- hosts: all
+  sudo: true
+  roles:
+    - nginx
+    - puma
+
+# PhantomJS
+- hosts: all
+  sudo: true
+  roles:
+    - phantomjs

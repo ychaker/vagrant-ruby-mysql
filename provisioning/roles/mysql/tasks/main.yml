@@ -1,0 +1,39 @@
+---
+- name: Install MySQL
+  apt: name={{ item }} state=latest
+  with_items:
+    - libmysqlclient-dev
+    - mysql-server
+    - mysql-client
+    - python-mysqldb
+  sudo: yes
+
+- name: Add MySQL user
+  mysql_user: name=vagrant
+              host={{ item }}
+              password=vagrant priv=*.*:ALL,GRANT
+              login_user=root
+              login_password=
+  with_items:
+    - '%'
+    - localhost
+
+- name: Create MySQL databases
+  mysql_db: name={{ item }} state=present
+  with_items:
+    - site_development
+    - site_test
+
+- name: Start the MySQL service
+  service: name=mysql state=started enabled=true
+
+- file: path=/etc/mysql/conf.d state=directory
+  sudo: yes
+
+- name: Set MySQL number of connections
+  template: src=max_connections.cnf.j2 dest=/etc/mysql/conf.d/max_connections.cnf
+  sudo: yes
+
+- name: Install MySQL command line client configuration file
+  template: src=my.cnf.j2 dest=/home/vagrant/.my.cnf owner=vagrant group=vagrant
+  sudo: yes

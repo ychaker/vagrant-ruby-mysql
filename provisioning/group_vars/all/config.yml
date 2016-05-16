@@ -1,0 +1,37 @@
+---
+rails_env:    development
+target:       virtualbox
+path:         /vagrant
+
+profile_d_path: '{{ user_home_path }}/profile.d'
+
+rails_version:  4
+ruby_install:   rbenv
+ruby_version:   2.3.1
+
+user_name:      '{{ "vagrant" if target == "virtualbox" else app_name }}'
+group_name:     '{{ user_name }}'
+user_home_path: '/home/{{ user_name }}'
+
+
+app_path: '{{ path if target == "virtualbox" else "{{ path }}/current" }}'
+app_public_path: "{{ app_path }}/public"
+app_config_path: "{{ app_path }}/config"
+app_temp_path: "{{ app_path }}/tmp"
+app_logs_path: "{{ app_path }}/log"
+
+ruby_user_name: '{{ "root" if ruby_install == "package" else user_name }}'
+
+server_type:  nginx_puma
+server_name:  localhost
+ssl_certificate_path:     /etc/nginx/ssl/{{ server_name }}.crt
+ssl_certificate_key_path: /etc/nginx/ssl/{{ server_name }}.key
+
+puma_bind_path: "unix://{{ app_temp_path }}/sockets/puma.{{ rails_env }}.sock"
+puma_config_path: "{{ app_config_path }}/puma.{{ rails_env }}.rb"
+puma_pidfile_path: "{{ app_temp_path }}/pids/puma.{{ rails_env }}.pid"
+puma_stderr_redirect_path: "{{ app_logs_path }}/puma.{{ rails_env }}.err.log"
+puma_stdout_redirect_path: "{{ app_logs_path }}/puma.{{ rails_env }}.log"
+
+phantomjs_version:  "1.9.8"
+phantomjs_url:      "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2"

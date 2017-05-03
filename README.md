@@ -82,7 +82,7 @@ vagrant box add --name ruby-mysql pkg/ruby-mysql.box
 To make sure all worked properly you can list the local boxes you have:
 
 ```
-$ vagrant box list                            
+$ vagrant box list
 [name-of-box]   (virtualbox, 0)
 ubuntu/trusty64 (virtualbox, 14.04)
 ```
@@ -90,7 +90,7 @@ ubuntu/trusty64 (virtualbox, 14.04)
 **Example:**
 
 ```
-$ vagrant box list                            
+$ vagrant box list
 ruby-mysql      (virtualbox, 0)
 ubuntu/trusty64 (virtualbox, 14.04)
 ```
@@ -107,3 +107,4 @@ to point to the box, or by initializing a new Vagrant setup by running the `init
 
 ```
 vagrant init ychaker/ruby-mysql; vagrant up --provider virtualbox
+```

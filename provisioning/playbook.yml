@@ -1,27 +1,80 @@
 ---
-# Basics
 - hosts: all
-  sudo: true
+  gather_facts: False
+  become: true
+
+  tasks:
+  - name: install python 2
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+
+# Basics
+- hosts:  all
+  become: true
   roles:
-    - base
-    - ruby
-    - vim
+    - bearandgiraffe.base
+    - bearandgiraffe.ruby
+    - {
+      role:           bearandgiraffe.vim,
+      vim_username:   '{{ username }}',
+      vim_group_name: '{{ group_name }}'
+    }
+    - bearandgiraffe.node
+    - bearandgiraffe.yarn
+    - bearandgiraffe.phantomjs
 
 # DB
-- hosts: all
-  sudo: true
+- hosts:  all
+  become: true
   roles:
     - mysql
 
 # Servers
-- hosts: all
-  sudo: true
+- hosts:  all
+  become: true
   roles:
-    - nginx
+    - {
+      role:               bearandgiraffe.nginx,
+      nginx_home_path:    '{{ path }}',
+      nginx_db_user:      '{{ db_user }}',
+      nginx_db_password:  '{{ db_password }}',
+      nginx_server_type:  '{{ server_type }}'
+    }
+
+- hosts:  all
+  become: '{{ username }}'
+  roles:
     - puma
 
-# PhantomJS
-- hosts: all
-  sudo: true
+# Remove Apache
+- hosts:  all
+  user:   vagrant
+  tasks:
+    - name: Ramove Apache2
+      apt: name={{ item }} state=absent purge=yes force=yes
+      with_items:
+       - apache2
+       - apache2-utils
+      become: true
+
+# Rails
+- hosts:  all
   roles:
-    - phantomjs
+    - rails
+
+# Redis
+- hosts:  all
+  become: true
+  roles:
+    - bearandgiraffe.redis
+
+# Heroku
+- hosts:  all
+  become: true
+  roles:
+    - bearandgiraffe.heroku-cli
+
+- hosts: all
+  become: true
+  roles:
+    - bearandgiraffe.selenium

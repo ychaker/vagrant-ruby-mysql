@@ -1,0 +1,32 @@
+# Install the Base role from the Ansible Galaxy
+- src: bearandgiraffe.base
+
+# Install the Ruby role from the Ansible Galaxy
+- src: bearandgiraffe.ruby
+
+# Install the Java8 role from the Ansible Galaxy
+- src: bearandgiraffe.java8
+
+# Install the Vim role from the Ansible Galaxy
+- src: bearandgiraffe.vim
+
+# Install the Node role from the Ansible Galaxy
+- src: bearandgiraffe.node
+
+# Install the Yarn role from the Ansible Galaxy
+- src: bearandgiraffe.yarn
+
+# Install the PhantomJS role from the Ansible Galaxy
+- src: bearandgiraffe.phantomjs
+
+# Install the nginx role from the Ansible Galaxy
+- src: bearandgiraffe.nginx
+
+# Install the Redis role from the Ansible Galaxy
+- src: bearandgiraffe.redis
+
+# Install the Heroku CLI role from the Ansible Galaxy
+- src: bearandgiraffe.heroku-cli
+
+# Install the Selenium role from the Ansible Galaxy
+- src: bearandgiraffe.selenium

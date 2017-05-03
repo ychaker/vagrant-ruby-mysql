@@ -1,0 +1,3 @@
+---
+- name: Install rails gem
+  command: /bin/bash -l -c 'gem install rails --no-ri --no-rdoc'

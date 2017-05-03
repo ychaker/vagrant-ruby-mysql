@@ -6,7 +6,7 @@
     - mysql-server
     - mysql-client
     - python-mysqldb
-  sudo: yes
+  become: yes
 
 - name: Add MySQL user
   mysql_user: name=vagrant
@@ -28,12 +28,12 @@
   service: name=mysql state=started enabled=true
 
 - file: path=/etc/mysql/conf.d state=directory
-  sudo: yes
+  become: yes
 
 - name: Set MySQL number of connections
   template: src=max_connections.cnf.j2 dest=/etc/mysql/conf.d/max_connections.cnf
-  sudo: yes
+  become: yes
 
 - name: Install MySQL command line client configuration file
   template: src=my.cnf.j2 dest=/home/vagrant/.my.cnf owner=vagrant group=vagrant
-  sudo: yes
+  become: yes
